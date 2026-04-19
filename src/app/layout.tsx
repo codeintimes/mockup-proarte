@@ -13,7 +13,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased bg-slate-50 min-h-screen">
         <div className="flex min-h-screen">
           <Sidebar />
-          <main className="flex-1 overflow-auto">
+          {/* pt-14 = mobile top bar height; pb-16 = mobile bottom tab bar; lg resets both */}
+          <main className="flex-1 overflow-auto pt-14 pb-16 lg:pt-0 lg:pb-0">
             {children}
           </main>
         </div>

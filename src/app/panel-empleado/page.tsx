@@ -28,17 +28,17 @@ const emotionOptions = [
 function PriorityBadge({ score }: { score: number }) {
   if (score >= 8.5) return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-red-50 text-red-600 border border-red-200">
-      <span className="w-1.5 h-1.5 rounded-full bg-red-500" /> {score}
+      <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" /> {score}
     </span>
   );
   if (score >= 6) return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-600 border border-amber-200">
-      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" /> {score}
+      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" /> {score}
     </span>
   );
   return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
-      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> {score}
+      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" /> {score}
     </span>
   );
 }
@@ -59,19 +59,19 @@ export default function PanelEmpleado() {
   const capacityPct = 87;
 
   return (
-    <div className="p-6 max-w-[1400px] fade-in">
+    <div className="p-4 sm:p-6 max-w-[1400px] fade-in">
       {/* Header */}
       <div className="mb-5">
-        <div className="flex items-center justify-between mb-1">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-1">
           <div>
-            <h1 className="text-xl font-bold text-slate-900">
+            <h1 className="text-lg sm:text-xl font-bold text-slate-900">
               Buenos días, {currentUser.name.split(" ")[0]} 👋
             </h1>
             <p className="text-sm text-slate-500">Lunes, 19 de abril · Equipo Producto</p>
           </div>
-          <div className="flex items-center gap-2 text-xs bg-indigo-50 border border-indigo-100 rounded-lg px-3 py-1.5 text-indigo-600">
+          <div className="flex items-center gap-2 text-xs bg-indigo-50 border border-indigo-100 rounded-lg px-3 py-1.5 text-indigo-600 self-start sm:self-auto">
             <Bot size={13} />
-            Sistema en aprendizaje · Día {currentUser.dayOnSystem} con Conectian
+            <span>Sistema en aprendizaje · Día {currentUser.dayOnSystem}</span>
           </div>
         </div>
 
@@ -86,12 +86,13 @@ export default function PanelEmpleado() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
-        {/* Left: Tasks (2/3) */}
-        <div className="col-span-2 space-y-4">
-          {/* Task List */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Left: Tasks (2/3 on desktop) */}
+        <div className="lg:col-span-2 space-y-4">
+
+          {/* Task List — table on md+, cards on mobile */}
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm">
-            <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+            <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 <h2 className="text-sm font-semibold text-slate-800">Tareas del día</h2>
                 <span className="text-xs bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full border border-indigo-100 font-medium flex items-center gap-1">
@@ -100,7 +101,9 @@ export default function PanelEmpleado() {
               </div>
               <span className="text-xs text-slate-400">Actualizado hace 2 min</span>
             </div>
-            <div className="divide-y divide-slate-50">
+
+            {/* Desktop table */}
+            <div className="hidden md:block divide-y divide-slate-50">
               <div className="grid grid-cols-[1fr_90px_90px_100px_140px] gap-3 px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
                 <span>Tarea</span>
                 <span>Prioridad IA</span>
@@ -112,18 +115,18 @@ export default function PanelEmpleado() {
                 <div
                   key={task.id}
                   className={clsx(
-                    "grid grid-cols-[1fr_90px_90px_100px_140px] gap-3 px-4 py-3 items-center hover:bg-slate-50 transition-colors group",
+                    "grid grid-cols-[1fr_90px_90px_100px_140px] gap-3 px-4 py-3 items-center hover:bg-slate-50 transition-colors",
                     task.status === "Bloqueada" && "opacity-60"
                   )}
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className={clsx("text-sm font-medium truncate", task.status === "Bloqueada" ? "text-slate-400" : "text-slate-800")}>
+                      <span className={clsx("text-sm font-medium", task.status === "Bloqueada" ? "text-slate-400" : "text-slate-800")}>
                         {task.title}
                       </span>
                       {task.aiReordered && (
                         <span className="shrink-0 inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-500 border border-indigo-100 font-medium">
-                          <Sparkles size={9} /> Reordenado por IA
+                          <Sparkles size={9} /> Reordenado
                         </span>
                       )}
                       {task.tag && task.tag !== "Reordenado por IA" && (
@@ -160,36 +163,66 @@ export default function PanelEmpleado() {
                 </div>
               ))}
             </div>
+
+            {/* Mobile card list */}
+            <div className="md:hidden divide-y divide-slate-100">
+              {tasks.map((task) => (
+                <div
+                  key={task.id}
+                  className={clsx(
+                    "px-4 py-3 space-y-1.5",
+                    task.status === "Bloqueada" && "opacity-60"
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <span className={clsx("text-sm font-medium leading-snug", task.status === "Bloqueada" ? "text-slate-400" : "text-slate-800")}>
+                      {task.title}
+                    </span>
+                    <PriorityBadge score={task.priority} />
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <span className="flex items-center gap-1"><Clock size={11} />{task.estimatedTime}</span>
+                    <span className="flex items-center gap-1"><StatusIcon status={task.status} />{task.status}</span>
+                    {task.aiReordered && (
+                      <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-500 border border-indigo-100 font-medium">
+                        <Sparkles size={9} /> IA
+                      </span>
+                    )}
+                  </div>
+                  {task.blocker && (
+                    <div className="flex items-center gap-1 text-xs text-amber-600">
+                      <AlertTriangle size={11} />
+                      <span>{task.blocker}</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Capacity Bar */}
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2">
               <h2 className="text-sm font-semibold text-slate-800">Capacidad del día</h2>
               <span className="text-xs text-slate-400">6h 20min estimadas · día de 8h</span>
             </div>
             <div className="h-3 bg-slate-100 rounded-full overflow-hidden mb-2">
-              <div
-                className="h-full rounded-full bg-amber-400 transition-all"
-                style={{ width: `${capacityPct}%` }}
-              />
+              <div className="h-full rounded-full bg-amber-400 transition-all" style={{ width: `${capacityPct}%` }} />
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5 text-xs text-amber-600">
-                <AlertTriangle size={12} />
-                <span className="font-medium">{capacityPct}% de carga</span>
-                <span className="text-slate-400">— riesgo de sobrecarga</span>
-              </div>
+            <div className="flex items-center gap-1.5 text-xs text-amber-600 mb-3">
+              <AlertTriangle size={12} />
+              <span className="font-medium">{capacityPct}% de carga</span>
+              <span className="text-slate-400">— riesgo de sobrecarga</span>
             </div>
             {!suggestionAccepted ? (
-              <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2.5 flex items-center justify-between gap-3">
-                <div className="flex items-start gap-2">
+              <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2.5">
+                <div className="flex items-start gap-2 mb-2">
                   <Bot size={14} className="text-amber-500 mt-0.5 shrink-0" />
                   <p className="text-xs text-amber-700">
                     <strong>Sugerencia IA:</strong> Mover &ldquo;Reporte semanal de métricas&rdquo; a mañana — impacto bajo, libera 20 min.
                   </p>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2">
                   <button
                     onClick={() => setSuggestionAccepted(true)}
                     className="text-xs bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
@@ -202,7 +235,7 @@ export default function PanelEmpleado() {
                 </div>
               </div>
             ) : (
-              <div className="mt-3 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 flex items-center gap-2 text-xs text-emerald-700">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 flex items-center gap-2 text-xs text-emerald-700">
                 <CheckCircle2 size={13} />
                 Tarea movida a mañana. Tu carga ahora es del 83%.
               </div>
@@ -224,7 +257,7 @@ export default function PanelEmpleado() {
                     <p className="text-xs text-slate-500 mt-0.5">Puedo automatizarlo — ahorrarías ~20 min/semana.</p>
                   </div>
                 </div>
-                <button className="shrink-0 text-xs text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                <button className="shrink-0 text-xs text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
                   Ver <ChevronRight size={12} />
                 </button>
               </div>
@@ -236,7 +269,7 @@ export default function PanelEmpleado() {
                     <p className="text-xs text-slate-500 mt-0.5">¿Quieres que genere una agenda automática para cada una?</p>
                   </div>
                 </div>
-                <button className="shrink-0 text-xs text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                <button className="shrink-0 text-xs text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
                   Generar <ChevronRight size={12} />
                 </button>
               </div>
@@ -244,7 +277,7 @@ export default function PanelEmpleado() {
           </div>
         </div>
 
-        {/* Right: Emotional check-in + stats (1/3) */}
+        {/* Right: Emotional check-in + stats (1/3 on desktop) */}
         <div className="space-y-4">
           {/* Emotional Check-in */}
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
@@ -276,16 +309,12 @@ export default function PanelEmpleado() {
                 </span>
               </div>
               <input
-                type="range"
-                min={1}
-                max={10}
-                value={load}
+                type="range" min={1} max={10} value={load}
                 onChange={(e) => setLoad(Number(e.target.value))}
                 className="w-full accent-indigo-500"
               />
               <div className="flex justify-between text-[10px] text-slate-300 mt-0.5">
-                <span>Baja</span>
-                <span>Alta</span>
+                <span>Baja</span><span>Alta</span>
               </div>
             </div>
 

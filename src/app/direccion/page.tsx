@@ -103,7 +103,7 @@ export default function Direccion() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
             <h1 className="text-lg sm:text-xl font-bold text-slate-900">Panel de Dirección</h1>
-            <p className="text-sm text-slate-500">Visibilidad de equipo · Conectian · 200 empleados</p>
+            <p className="text-sm text-slate-500">Visibilidad de equipo · Velora · 200 empleados</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="flex items-center gap-1.5 text-xs bg-emerald-50 border border-emerald-200 text-emerald-600 rounded-full px-2.5 py-1 font-medium">

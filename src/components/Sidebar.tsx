@@ -70,7 +70,7 @@ export default function Sidebar() {
         {/* Empresa */}
         <div className="px-5 py-3 border-b border-slate-100">
           <div className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Empresa</div>
-          <div className="text-xs font-semibold text-slate-700">Conectian</div>
+          <div className="text-xs font-semibold text-slate-700">Velora</div>
           <div className="text-[10px] text-slate-400">200 empleados · 8 equipos</div>
         </div>
 
@@ -146,7 +146,7 @@ export default function Sidebar() {
 
             <div className="px-4 py-3 border-b border-slate-100">
               <div className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Empresa</div>
-              <div className="text-xs font-semibold text-slate-700">Conectian</div>
+              <div className="text-xs font-semibold text-slate-700">Velora</div>
               <div className="text-[10px] text-slate-400">200 empleados · 8 equipos</div>
             </div>
 

@@ -58,7 +58,7 @@ export default function MotorIA() {
                 Activo
               </span>
             </div>
-            <p className="text-sm text-slate-500">Análisis de comunicación y fricción · Conectian</p>
+            <p className="text-sm text-slate-500">Análisis de comunicación y fricción · Velora</p>
           </div>
           <div className="text-xs text-slate-400 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 self-start sm:self-auto">
             Actualizado hace 3 min
